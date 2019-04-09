@@ -1,0 +1,23 @@
+PODS:
+  - NextcloudConfig (0.1.0)
+  - SwiftLint (0.31.0)
+
+DEPENDENCIES:
+  - NextcloudConfig (from `../`)
+  - SwiftLint
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - SwiftLint
+
+EXTERNAL SOURCES:
+  NextcloudConfig:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  NextcloudConfig: f3a9af775ab6fbd4b92e24ccb1a2be73a30afd34
+  SwiftLint: 7a0227733d786395817373b2d0ca799fd0093ff3
+
+PODFILE CHECKSUM: 49399c488f3f632461fe577fc6c8cc57c6aee545
+
+COCOAPODS: 1.6.1

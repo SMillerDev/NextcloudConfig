@@ -7,12 +7,22 @@
 //
 
 import UIKit
+import NextcloudConfig
 
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        guard let url = URL(string: "https://cloud.seanmolenaar.eu") else {
+            return
+        }
+
+        let config = NextcloudConfig(baseURL: url)
+        config.fetch()
     }
 
     override func didReceiveMemoryWarning() {

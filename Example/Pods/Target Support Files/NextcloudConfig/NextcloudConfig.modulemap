@@ -1,0 +1,6 @@
+framework module NextcloudConfig {
+  umbrella header "NextcloudConfig-umbrella.h"
+
+  export *
+  module * { export * }
+}
