@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="vXZ-lx-hvc">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -20,11 +20,48 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Server name - tagline" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Inb-b0-NH5">
+                                <rect key="frame" x="0.0" y="323" width="375" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="F5u-Dj-7HU">
+                                <rect key="frame" x="40" y="352" width="295" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C1b-sy-uUc">
+                                <rect key="frame" x="168.5" y="390" width="38" height="30"/>
+                                <state key="normal" title="Login"/>
+                                <connections>
+                                    <action selector="didPressLogin" destination="vXZ-lx-hvc" eventType="touchUpInside" id="qLs-YG-ymk"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="F5u-Dj-7HU" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="7Kl-Z8-Gfg"/>
+                            <constraint firstItem="Inb-b0-NH5" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="8TJ-JL-MxG"/>
+                            <constraint firstItem="Inb-b0-NH5" firstAttribute="centerY" secondItem="kh9-bI-dsS" secondAttribute="centerY" id="GDR-JZ-SIK"/>
+                            <constraint firstItem="F5u-Dj-7HU" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" constant="-80" id="WIL-Ls-Hsy"/>
+                            <constraint firstItem="C1b-sy-uUc" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Xb3-eC-i0j"/>
+                            <constraint firstItem="Inb-b0-NH5" firstAttribute="centerX" secondItem="kh9-bI-dsS" secondAttribute="centerX" id="Xf5-sM-Y3W"/>
+                            <constraint firstItem="F5u-Dj-7HU" firstAttribute="top" secondItem="Inb-b0-NH5" secondAttribute="bottom" constant="8" id="iGO-UG-YrR"/>
+                            <constraint firstItem="C1b-sy-uUc" firstAttribute="top" secondItem="F5u-Dj-7HU" secondAttribute="bottom" constant="8" id="t0t-92-Bl9"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="label" destination="Inb-b0-NH5" id="kTw-tL-l9E"/>
+                        <outlet property="loginButton" destination="C1b-sy-uUc" id="BcD-PO-4ve"/>
+                        <outlet property="urlField" destination="F5u-Dj-7HU" id="DPJ-3a-PI1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="53.600000000000001" y="53.523238380809602"/>
         </scene>
     </scenes>
 </document>

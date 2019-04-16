@@ -20,5 +20,12 @@
   },
   "swift_version": "5.0",
   "source_files": "NextcloudConfig/Classes/**/*",
-  "frameworks": "Foundation"
+  "ios": {
+    "frameworks": [
+      "UIKit",
+      "SafariServices",
+      "LocalAuthentication",
+      "AuthenticationServices"
+    ]
+  }
 }

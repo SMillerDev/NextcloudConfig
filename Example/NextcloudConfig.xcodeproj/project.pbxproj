@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0F4952D38B0A00DCF144F37E /* Pods_NextcloudConfig_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3F2EFE1BD70F10171935270 /* Pods_NextcloudConfig_Example.framework */; };
+		14AAC4E2225E55C500687DC4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14AAC4E1225E55C500687DC4 /* Foundation.framework */; };
 		3EDC93652B16F60631515A05 /* Pods_NextcloudConfig_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAAF6A06CBB7C39F5092AD90 /* Pods_NextcloudConfig_Tests.framework */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14AAC4E1225E55C500687DC4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		238582BF8B5866B2EAE0B837 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		43C4C118FE2638A86AD5DF28 /* Pods-NextcloudConfig_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextcloudConfig_Tests.debug.xcconfig"; path = "Target Support Files/Pods-NextcloudConfig_Tests/Pods-NextcloudConfig_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		58D558A20B1EAB8DABA67BBF /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -42,7 +44,7 @@
 		607FACE51AFB9204008FA782 /* NextcloudConfig_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NextcloudConfig_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		B008AF4BBB1355EAAB0694AF /* NextcloudConfig.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = NextcloudConfig.podspec; path = ../NextcloudConfig.podspec; sourceTree = "<group>"; };
+		B008AF4BBB1355EAAB0694AF /* NextcloudConfig.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = NextcloudConfig.podspec; path = ../NextcloudConfig.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		B085FFF0245A5FB246762832 /* Pods-NextcloudConfig_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextcloudConfig_Tests.release.xcconfig"; path = "Target Support Files/Pods-NextcloudConfig_Tests/Pods-NextcloudConfig_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		C3F2EFE1BD70F10171935270 /* Pods_NextcloudConfig_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NextcloudConfig_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDDCABAADC8EA41A782E6F82 /* Pods-NextcloudConfig_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NextcloudConfig_Example.debug.xcconfig"; path = "Target Support Files/Pods-NextcloudConfig_Example/Pods-NextcloudConfig_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -54,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				14AAC4E2225E55C500687DC4 /* Foundation.framework in Frameworks */,
 				0F4952D38B0A00DCF144F37E /* Pods_NextcloudConfig_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,6 +145,7 @@
 		C84B9E11BB89387032A7B3E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				14AAC4E1225E55C500687DC4 /* Foundation.framework */,
 				C3F2EFE1BD70F10171935270 /* Pods_NextcloudConfig_Example.framework */,
 				EAAF6A06CBB7C39F5092AD90 /* Pods_NextcloudConfig_Tests.framework */,
 			);
@@ -167,6 +171,7 @@
 			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "NextcloudConfig_Example" */;
 			buildPhases = (
 				A8E0AFEDAAF0D8BBAAE52811 /* [CP] Check Pods Manifest.lock */,
+				14AAC4E3225E562400687DC4 /* Run Swiftlint */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
@@ -263,6 +268,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		14AAC4E3225E562400687DC4 /* Run Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run Swiftlint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#${PODS_ROOT}/SwiftLint/swiftlint\n";
+		};
 		5F167A58BD715421FD02719C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -518,10 +541,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 43C4C118FE2638A86AD5DF28 /* Pods-NextcloudConfig_Tests.debug.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -539,10 +559,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B085FFF0245A5FB246762832 /* Pods-NextcloudConfig_Tests.release.xcconfig */;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SDKROOT)/Developer/Library/Frameworks",
-					"$(inherited)",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";

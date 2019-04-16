@@ -42,22 +42,10 @@ class APIRequest {
     }
 }
 
-struct APIResponse<Body> {
+public struct APIResponse<Body> {
     let statusCode: Int
     let body: Body
     let request: URLRequest?
-}
-
-extension APIResponse where Body == Data? {
-    func decode<BodyType: Decodable>(to type: BodyType.Type) throws -> APIResponse<BodyType> {
-        guard let data = body else {
-            throw APIError.decodingFailure
-        }
-        let decodedJSON = try JSONDecoder().decode(BodyType.self, from: data)
-        return APIResponse<BodyType>(statusCode: self.statusCode,
-                                     body: decodedJSON,
-                                     request: nil)
-    }
 }
 
 enum APIError: Error {
@@ -69,6 +57,76 @@ enum APIError: Error {
 enum APIResult<Body> {
     case success(APIResponse<Body>)
     case failure(APIError)
+}
+
+public struct WebserviceResponse<T: Codable>: Codable {
+    public let ocs: WebserviceOcsResponse<T>
+    public func get() -> T? {
+        return ocs.data
+    }
+}
+
+public struct WebserviceOcsResponse<T: Codable>: Codable {
+    public let data: T?
+    public let meta: WebserviceMeta
+}
+
+public struct WebserviceMeta: Codable {
+    public let status: String
+    public let statuscode: Int
+    public let message: String
+    public let totalitems: String?
+    public let itemsperpage: String?
+}
+
+struct APIClient {
+
+    typealias APIClientCompletion = (Result<APIResponse<Data?>, APIError>) -> Void
+
+    private let session: URLSession
+    private let baseURL: URL
+
+    init(baseURL: URL) {
+        self.baseURL = baseURL
+        let sessionConfig = URLSessionConfiguration.default
+        sessionConfig.httpCookieAcceptPolicy = .onlyFromMainDocumentDomain
+        sessionConfig.requestCachePolicy = .reloadIgnoringLocalCacheData
+        self.session = URLSession(configuration: sessionConfig)
+    }
+
+    func perform(_ request: APIRequest, _ completion: @escaping APIClientCompletion) {
+        var urlComponents = URLComponents()
+        urlComponents.scheme = baseURL.scheme
+        urlComponents.host = baseURL.host
+        urlComponents.path = baseURL.path
+        urlComponents.queryItems = request.queryItems
+
+        guard let url = urlComponents.url?.appendingPathComponent(request.path) else {
+            completion(.failure(.invalidURL)); return
+        }
+
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = request.method.rawValue
+        urlRequest.httpBody = request.body
+        urlRequest.allHTTPHeaderFields = [
+            "OCS-APIRequest": "true",
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "Accept-Language": Locale.preferredLanguages.prefix(6).qualityEncoded,
+            "Accept-Encoding": ["br", "gzip", "deflate"].qualityEncoded,
+            "User-Agent": APIRequest.defaultUserAgent,
+        ]
+
+        request.headers?.forEach { urlRequest.addValue($0.value, forHTTPHeaderField: $0.field) }
+        let task = session.dataTask(with: urlRequest) { (data, response, error) in
+            guard let httpResponse = response as? HTTPURLResponse else {
+                completion(.failure(.requestFailed)); return
+            }
+            let response = APIResponse<Data?>(statusCode: httpResponse.statusCode, body: data, request: urlRequest)
+            completion(.success(response))
+        }
+        task.resume()
+    }
 }
 
 extension APIRequest {
@@ -88,54 +146,6 @@ extension APIRequest {
 
         return "NextcloudConfig"
     }()
-}
-
-struct APIClient {
-
-    typealias APIClientCompletion = (APIResult<Data?>) -> Void
-
-    private let session: URLSession
-    private let baseURL: URL
-
-    init(baseURL: URL, sessionConfig: URLSessionConfiguration = URLSessionConfiguration()) {
-        self.baseURL = baseURL
-        sessionConfig.httpAdditionalHeaders = [
-            "X-OCS-APIRequest": "true",
-            "Accept": "application/json; charset=utf-8",
-            "Accept-Language": Locale.preferredLanguages.prefix(6).qualityEncoded,
-            "Accept-Encoding": ["br", "gzip", "deflate"].qualityEncoded,
-            "User-Agent": APIRequest.defaultUserAgent,
-        ]
-        sessionConfig.httpCookieAcceptPolicy = .onlyFromMainDocumentDomain
-        sessionConfig.requestCachePolicy = .reloadIgnoringLocalCacheData
-        self.session = URLSession(configuration: sessionConfig)
-    }
-
-    func perform(_ request: APIRequest, _ completion: @escaping APIClientCompletion) {
-
-        var urlComponents = URLComponents()
-        urlComponents.scheme = baseURL.scheme
-        urlComponents.host = baseURL.host
-        urlComponents.path = baseURL.path
-        urlComponents.queryItems = request.queryItems
-
-        guard let url = urlComponents.url?.appendingPathComponent(request.path) else {
-            completion(.failure(.invalidURL)); return
-        }
-
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = request.method.rawValue
-        urlRequest.httpBody = request.body
-
-        request.headers?.forEach { urlRequest.addValue($0.value, forHTTPHeaderField: $0.field) }
-        let task = session.dataTask(with: url) { (data, response, error) in
-            guard let httpResponse = response as? HTTPURLResponse else {
-                completion(.failure(.requestFailed)); return
-            }
-            completion(.success(APIResponse<Data?>(statusCode: httpResponse.statusCode, body: data, request: urlRequest)))
-        }
-        task.resume()
-    }
 }
 
 extension Collection where Element == String {
