@@ -27,3 +27,6 @@ Sean Molenaar, sean@seanmolenaar.eu
 ## License
 
 NextcloudConfig is available under the MIT license. See the LICENSE file for more info.
+
+## Thanks
+Thanks to @Basca and @MarenOsnabrug for debugging the first version
