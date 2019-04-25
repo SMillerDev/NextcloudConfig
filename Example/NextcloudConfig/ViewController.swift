@@ -67,7 +67,7 @@ class ViewController: UIViewController {
                         return
                 }
                 text = "\(theming.name) - \(theming.slogan)"
-                color = NCColor.fromString(theming.color) ?? UIColor.black
+                color = StringColor.fromString(theming.color) ?? UIColor.black
             case .failure(let error):
                 text = error.localizedDescription
             }

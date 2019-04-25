@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// HTTP Method indicator
 enum HTTPMethod: String {
     case get = "GET"
     case put = "PUT"
@@ -18,11 +19,27 @@ enum HTTPMethod: String {
     case connect = "CONNECT"
 }
 
+/// Description of a HTTP header
 struct HTTPHeader {
     let field: String
     let value: String
 }
 
+/// Nextcloud API Response.
+///
+/// Contains the original request for debugging purposes.
+public struct APIResponse<Body> {
+    let statusCode: Int
+    let body: Body
+    let request: URLRequest?
+}
+
+/// Class describing a future API request
+/// # Usage
+/// ## Without data (GET/HEAD/DELETE/...)
+///     let request = APIRequest(method: .get, path: "index/flox")
+/// ## With data (POST/PATCH/PUT/...)
+///     let request = APIRequest(method: .put, path: "index/flox", body: SomeEncodableClass())
 class APIRequest {
     let method: HTTPMethod
     let path: String
@@ -30,11 +47,28 @@ class APIRequest {
     var headers: [HTTPHeader]?
     var body: Data?
 
+    /// Initialize an empty request
+    /// - parameters:
+    ///   - method: The HTTP method to use
+    ///   - path: The relative path from the baseURL
     init(method: HTTPMethod, path: String) {
         self.method = method
         self.path = path
+        self.headers = [
+            HTTPHeader(field: "OCS-APIRequest", value: "true"),
+            HTTPHeader(field: "Content-Type", value: "application/json"),
+            HTTPHeader(field: "Accept", value: "application/json"),
+            HTTPHeader(field: "Accept-Language", value: Locale.preferredLanguages.prefix(6).qualityEncoded),
+            HTTPHeader(field: "Accept-Encoding", value: ["br", "gzip", "deflate"].qualityEncoded),
+            HTTPHeader(field: "User-Agent", value: APIRequest.defaultUserAgent)
+        ]
     }
 
+    /// Initialize a request with a body as JSON
+    /// - parameters:
+    ///   - method: The HTTP method to use
+    ///   - path: The relative path from the baseURL
+    ///   - body: `Encodable` The data that should be in the HTTP body
     init<Body: Encodable>(method: HTTPMethod, path: String, body: Body) throws {
         self.method = method
         self.path = path
@@ -42,50 +76,14 @@ class APIRequest {
     }
 }
 
-public struct APIResponse<Body> {
-    let statusCode: Int
-    let body: Body
-    let request: URLRequest?
-}
-
-enum APIError: Error {
-    case invalidURL
-    case requestFailed
-    case decodingFailure
-}
-
-enum APIResult<Body> {
-    case success(APIResponse<Body>)
-    case failure(APIError)
-}
-
-public struct WebserviceResponse<T: Codable>: Codable {
-    public let ocs: WebserviceOcsResponse<T>
-    public func get() -> T? {
-        return ocs.data
-    }
-}
-
-public struct WebserviceOcsResponse<T: Codable>: Codable {
-    public let data: T?
-    public let meta: WebserviceMeta
-}
-
-public struct WebserviceMeta: Codable {
-    public let status: String
-    public let statuscode: Int
-    public let message: String
-    public let totalitems: String?
-    public let itemsperpage: String?
-}
-
+/// An API client to make Nextcloud API requests with
 struct APIClient {
-
-    typealias APIClientCompletion = (Result<APIResponse<Data?>, APIError>) -> Void
-
     private let session: URLSession
     private let baseURL: URL
 
+    /// Initialize a client
+    /// - parameters:
+    ///   - baseURL: The Nextcloud server url to configure for.
     init(baseURL: URL) {
         self.baseURL = baseURL
         let sessionConfig = URLSessionConfiguration.default
@@ -94,7 +92,12 @@ struct APIClient {
         self.session = URLSession(configuration: sessionConfig)
     }
 
-    func perform(_ request: APIRequest, _ completion: @escaping APIClientCompletion) {
+    /// Perform an API request with all the correct headers set for nextcloud.
+    ///
+    /// - parameters:
+    ///   - request: The API request that the client will perform
+    ///   - completion: The Result of that request as a closure
+    func perform(_ request: APIRequest, _ completion: @escaping (Result<APIResponse<Data?>, NextcloudError>) -> Void) {
         var urlComponents = URLComponents()
         urlComponents.scheme = baseURL.scheme
         urlComponents.host = baseURL.host
@@ -102,25 +105,16 @@ struct APIClient {
         urlComponents.queryItems = request.queryItems
 
         guard let url = urlComponents.url?.appendingPathComponent(request.path) else {
-            completion(.failure(.invalidURL)); return
+            completion(.failure(.badURL)); return
         }
 
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = request.method.rawValue
         urlRequest.httpBody = request.body
-        urlRequest.allHTTPHeaderFields = [
-            "OCS-APIRequest": "true",
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            "Accept-Language": Locale.preferredLanguages.prefix(6).qualityEncoded,
-            "Accept-Encoding": ["br", "gzip", "deflate"].qualityEncoded,
-            "User-Agent": APIRequest.defaultUserAgent,
-        ]
-
         request.headers?.forEach { urlRequest.addValue($0.value, forHTTPHeaderField: $0.field) }
         let task = session.dataTask(with: urlRequest) { (data, response, error) in
             guard let httpResponse = response as? HTTPURLResponse else {
-                completion(.failure(.requestFailed)); return
+                completion(.failure(.networkError)); return
             }
             let response = APIResponse<Data?>(statusCode: httpResponse.statusCode, body: data, request: urlRequest)
             completion(.success(response))
@@ -129,11 +123,10 @@ struct APIClient {
     }
 }
 
+/// An extension to provide a useragent to the API request class
 extension APIRequest {
     /// Returns NextCloudConfig default `User-Agent` header.
-    ///
     /// See the [User-Agent header documentation](https://tools.ietf.org/html/rfc7231#section-5.5.3).
-    ///
     /// Example: `iOS Example/1.0 (org.alamofire.iOS-Example; build:1)`
     public static let defaultUserAgent: String = {
         if let info = Bundle.main.infoDictionary {
@@ -148,7 +141,11 @@ extension APIRequest {
     }()
 }
 
+/// Convenience method to encode collections for usage in headers
 extension Collection where Element == String {
+
+    /// Convenience option that encodes collections for usage in HTTP headers
+    /// - returns: `String` HTTP encoded collection
     var qualityEncoded: String {
         return enumerated().map { (index, encoding) in
             let quality = 1.0 - (Double(index) * 0.1)

@@ -22,6 +22,7 @@
 /* Begin PBXBuildFile section */
 		03BB9AED8B205095DF8A9A1EAFA6C476 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06380E433C8EC678FB199B3A2497C00 /* UIKit.framework */; };
 		148975C5F3AFF595CB60EA47380648B8 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D36259DDAB63B55321D35B767FF7815 /* SafariServices.framework */; };
+		14BB69E62271DC0800081754 /* WebserviceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB69E52271DC0800081754 /* WebserviceResponse.swift */; };
 		14E0C6842265BC6C003A04BF /* CapabilitiesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E0C6832265BC6C003A04BF /* CapabilitiesResponse.swift */; };
 		14E0C6862265E1A4003A04BF /* AuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E0C6852265E1A3003A04BF /* AuthenticationSession.swift */; };
 		1F80585796589CECCEA1C73D397EEAA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2C0A54AEB56E68721352E3FA8AF66E4 /* Foundation.framework */; };
@@ -68,6 +69,7 @@
 		01F2682E51CBEE73D2EEDFCAAA910B0D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		07724CC2CA64A0E5FBA7885AD008531C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		14714C613592C1A885F9400BA222B62B /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/AuthenticationServices.framework; sourceTree = DEVELOPER_DIR; };
+		14BB69E52271DC0800081754 /* WebserviceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebserviceResponse.swift; sourceTree = "<group>"; };
 		14E0C6832265BC6C003A04BF /* CapabilitiesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CapabilitiesResponse.swift; path = NextcloudConfig/Classes/CapabilitiesResponse.swift; sourceTree = "<group>"; };
 		14E0C6852265E1A3003A04BF /* AuthenticationSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthenticationSession.swift; path = NextcloudConfig/Classes/AuthenticationSession.swift; sourceTree = "<group>"; };
 		19F3856D37B3A68FE09495D5378B7BAF /* Pods-NextcloudConfig_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NextcloudConfig_Example-Info.plist"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			children = (
 				14E0C6852265E1A3003A04BF /* AuthenticationSession.swift */,
 				14E0C6832265BC6C003A04BF /* CapabilitiesResponse.swift */,
+				14BB69E52271DC0800081754 /* WebserviceResponse.swift */,
 				B00263EAB775F210B2332A111853CEF0 /* ApiClient.swift */,
 				EA44F243CFFADAEE21A0415720DF1F0C /* NCColor.swift */,
 				7251AC4386C6D974101F939A12BB0409 /* NextcloudConfig.swift */,
@@ -444,6 +447,7 @@
 			files = (
 				C7C00F3315DF288C49E6EC1AB37BE4E2 /* ApiClient.swift in Sources */,
 				14E0C6842265BC6C003A04BF /* CapabilitiesResponse.swift in Sources */,
+				14BB69E62271DC0800081754 /* WebserviceResponse.swift in Sources */,
 				A771CDD3C4F3F96B4A6C8E9FE25FEB4A /* NCColor.swift in Sources */,
 				4DE1BE693F086A9EEC48075517433C0D /* NextcloudConfig-dummy.m in Sources */,
 				14E0C6862265E1A4003A04BF /* AuthenticationSession.swift in Sources */,

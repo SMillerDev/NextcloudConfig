@@ -7,7 +7,14 @@
 
 import UIKit
 
-public class NCColor: UIColor {
+/// Convenience class to parse hex colors to UIColors.
+public class StringColor: UIColor {
+
+    /// Convenience function to parse hex colors to UIColors.
+    ///
+    /// - parameters:
+    ///   - string: The hexadecimal string representing a color.
+    /// - returns: A uicolor or nil if parsing failed
     public static func fromString(_ string: String) -> UIColor? {
         let hex = string.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
         var int = UInt32()
@@ -21,7 +28,7 @@ public class NCColor: UIColor {
         case 8: // ARGB (32-bit)
             (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
         default:
-            return .clear
+            return nil
         }
         return UIColor(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
     }

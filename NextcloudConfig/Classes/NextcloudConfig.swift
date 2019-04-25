@@ -8,22 +8,78 @@
 import Foundation
 import AuthenticationServices
 
+/// Class providing nextcloud configuration options.
 public class NextcloudConfig: Any {
 
     let baseURL: URL
     let client: APIClient
 
+    /// Initializer for the nextcloud config class.
+    ///
+    /// - parameters:
+    ///   - baseURL: The url of the nextcloud server to configure for.
     public init(baseURL: URL) {
         self.baseURL = baseURL
         self.client = APIClient(baseURL: baseURL)
     }
 
+    /// A function to create an authentication session with nextcloud.
+    /// This wraps the nextcloud [api](https://docs.nextcloud.com/server/16/developer_manual/client_apis/LoginFlow/index.html#opening-the-webview) for login
+    ///
+    /// See the following code as an example of the usage:
+    ///
+    ///     webAuthSession = config.loginSession { urlOrNil, errorOrNil in
+    ///         if let error = errorOrNil {
+    ///             print(error.localizedDescription)
+    ///             return
+    ///         }
+    ///         guard let url = urlOrNil else {
+    ///             print("Failure, no error or URL")
+    ///             return
+    ///         }
+    ///         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    ///     }
+    ///     _ = webAuthSession.start()
+    /// The returned class suffers from the bug described here: [ajkueterman.com/handle-ios-aswebauthenticationsession-bug](https://ajkueterman.com/ios/swift/authenticationservices/handle-ios-aswebauthenticationsession-bug/) so it needs to be a class variable to be used.
+    ///
+    /// - SeeAlso: [documentation](https://docs.nextcloud.com/server/16/developer_manual/client_apis/LoginFlow/index.html#opening-the-webview)
+    /// - Requires: iOS 11 and higher
+    /// - parameters:
+    ///   - completionHandler: A handler that is called at the end of authentication. Has an URL? and Error? parameter
+    /// - returns: An authentication session to use, this is a wrapper of ASWebAuthenticationSession.
+    @available(iOS 11, *)
     public func loginSession(completionHandler: @escaping (URL?, Error?) -> Void) -> AuthenticationSessionProtocol {
-        return AuthenticationSession(url: baseURL.appendingPathExtension("/index.php/login/flow"),
+        let appname = Bundle.main.infoDictionary?[kCFBundleExecutableKey as String] as? String ?? "NextcloudConfig"
+        return AuthenticationSession(url: baseURL.appendingPathExtension("/index.php/login/flow?clientIdentifier=\(appname)"),
                                                callbackURLScheme: "nc://login/", completionHandler: completionHandler)
     }
 
-    public func fetch<T: Codable>(path: String, type: T.Type, completionHandler: @escaping (Result<T, NextcloudError>) -> Void){
+    /// A function to request data from an open nextcloud webservice.
+    ///
+    /// See the following code as an example of the usage:
+    ///
+    ///     config?.fetch(path: "ocs/v1.php/cloud/capabilities", type: WebserviceResponse<CapabilitiesResponse>.self) { result in
+    ///         var name: String = "unknown"
+    ///         switch result {
+    ///         case .success(let fetchedConfig):
+    ///             guard let theming = fetchedConfig.ocs.data?.capabilities?.theming else {
+    ///                 return
+    ///             }
+    ///             name = theming.name
+    ///         case .failure(let error):
+    ///             text = error.localizedDescription
+    ///         }
+    ///         print("nextcloud server name: \(name)")
+    ///     }
+    ///
+    /// - seealso: `CapabilitiesResponse`, the mapped response within the standard nextcloud wrappers.
+    /// - seealso: `WebserviceResponse`, the mapped response standard nextcloud wrappers.
+    ///
+    /// - parameters:
+    ///   - path: The api path to do the request to
+    ///   - type: The class to expect as a response
+    ///   - completionHandler: A closure that is executed at the end of the call. Has a T and NextcloudError parameter
+    public func fetch<T: Codable>(path: String, type: T.Type, completionHandler: @escaping (Result<T, NextcloudError>) -> Void) {
         let request = APIRequest(method: .get, path: path)
         client.perform(request) { (result) in
             switch result {
@@ -48,15 +104,24 @@ public class NextcloudConfig: Any {
                     completionHandler(.failure(.decodeError))
                     return
                 }
-            case .failure:
+            case .failure(let error):
                 print("Error perform network request")
-                completionHandler(.failure(.networkError))
+                completionHandler(.failure(error))
                 return
             }
         }
     }
 }
 
+/// A list of possible errors that the webservice can return.
+///
+/// Explanation:
+/// - **badURL**: An invalid URL was passed to a function.
+/// - **emptyResponse**: The request was made but the server didn't return any data.
+/// - **invalidResponse**: The request was made but the server didn't return valid return data.
+/// - **decodeError**: The request was made but the server didn't return data that could be decoded.
+/// - **wrongStatus**: The request was made but the server returned an invalid status.
+/// - **networkError**: The request was not made due to network issues.
 public enum NextcloudError: Error {
     case badURL
     case emptyResponse
