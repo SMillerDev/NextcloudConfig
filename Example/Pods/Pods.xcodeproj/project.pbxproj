@@ -22,7 +22,8 @@
 /* Begin PBXBuildFile section */
 		03BB9AED8B205095DF8A9A1EAFA6C476 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B06380E433C8EC678FB199B3A2497C00 /* UIKit.framework */; };
 		148975C5F3AFF595CB60EA47380648B8 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D36259DDAB63B55321D35B767FF7815 /* SafariServices.framework */; };
-		14BB69E62271DC0800081754 /* WebserviceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB69E52271DC0800081754 /* WebserviceResponse.swift */; };
+		14BB69E92271E88E00081754 /* StringColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB69E72271E88E00081754 /* StringColor.swift */; };
+		14BB69EA2271E88E00081754 /* WebserviceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14BB69E82271E88E00081754 /* WebserviceResponse.swift */; };
 		14E0C6842265BC6C003A04BF /* CapabilitiesResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E0C6832265BC6C003A04BF /* CapabilitiesResponse.swift */; };
 		14E0C6862265E1A4003A04BF /* AuthenticationSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E0C6852265E1A3003A04BF /* AuthenticationSession.swift */; };
 		1F80585796589CECCEA1C73D397EEAA5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2C0A54AEB56E68721352E3FA8AF66E4 /* Foundation.framework */; };
@@ -32,7 +33,6 @@
 		4DE1BE693F086A9EEC48075517433C0D /* NextcloudConfig-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C736EB99178E6809F2B67CD60FFD9BA4 /* NextcloudConfig-dummy.m */; };
 		561BE5A3E81D2E6D8990FFB6978E728E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B2C0A54AEB56E68721352E3FA8AF66E4 /* Foundation.framework */; };
 		95184D0C7B316BD5DF7B9318993E825E /* Pods-NextcloudConfig_Example-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E78B8240965BDA8CE0483E975969D2E7 /* Pods-NextcloudConfig_Example-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A771CDD3C4F3F96B4A6C8E9FE25FEB4A /* NCColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA44F243CFFADAEE21A0415720DF1F0C /* NCColor.swift */; };
 		AD765F877D4C77838C1C8E83023414DF /* AuthenticationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14714C613592C1A885F9400BA222B62B /* AuthenticationServices.framework */; };
 		BE6EAACA590F7B1076D78213B24D2D20 /* NextcloudConfig-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DD379353B848A9BEB60E6DE9332292 /* NextcloudConfig-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7C00F3315DF288C49E6EC1AB37BE4E2 /* ApiClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B00263EAB775F210B2332A111853CEF0 /* ApiClient.swift */; };
@@ -69,7 +69,8 @@
 		01F2682E51CBEE73D2EEDFCAAA910B0D /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		07724CC2CA64A0E5FBA7885AD008531C /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		14714C613592C1A885F9400BA222B62B /* AuthenticationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AuthenticationServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.0.sdk/System/Library/Frameworks/AuthenticationServices.framework; sourceTree = DEVELOPER_DIR; };
-		14BB69E52271DC0800081754 /* WebserviceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebserviceResponse.swift; sourceTree = "<group>"; };
+		14BB69E72271E88E00081754 /* StringColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = StringColor.swift; path = NextcloudConfig/Classes/StringColor.swift; sourceTree = "<group>"; };
+		14BB69E82271E88E00081754 /* WebserviceResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WebserviceResponse.swift; path = NextcloudConfig/Classes/WebserviceResponse.swift; sourceTree = "<group>"; };
 		14E0C6832265BC6C003A04BF /* CapabilitiesResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CapabilitiesResponse.swift; path = NextcloudConfig/Classes/CapabilitiesResponse.swift; sourceTree = "<group>"; };
 		14E0C6852265E1A3003A04BF /* AuthenticationSession.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthenticationSession.swift; path = NextcloudConfig/Classes/AuthenticationSession.swift; sourceTree = "<group>"; };
 		19F3856D37B3A68FE09495D5378B7BAF /* Pods-NextcloudConfig_Example-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-NextcloudConfig_Example-Info.plist"; sourceTree = "<group>"; };
@@ -103,7 +104,6 @@
 		CE89B2B11F163F1139A74DAE2767AED0 /* NextcloudConfig.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = NextcloudConfig.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D3DB0DE9B14EEBDAD3A9DFDDE21BFA9C /* NextcloudConfig-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NextcloudConfig-prefix.pch"; sourceTree = "<group>"; };
 		E78B8240965BDA8CE0483E975969D2E7 /* Pods-NextcloudConfig_Example-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-NextcloudConfig_Example-umbrella.h"; sourceTree = "<group>"; };
-		EA44F243CFFADAEE21A0415720DF1F0C /* NCColor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NCColor.swift; path = NextcloudConfig/Classes/NCColor.swift; sourceTree = "<group>"; };
 		F70EA6FB3DD7A7CA41AC622DFC2EFF80 /* Pods-NextcloudConfig_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NextcloudConfig_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		F763A9295D3DF907CD6089F6F668369A /* Pods-NextcloudConfig_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-NextcloudConfig_Example.release.xcconfig"; sourceTree = "<group>"; };
 		F8E56D24569A9A78F1594A3C998ED911 /* NextcloudConfig.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NextcloudConfig.xcconfig; sourceTree = "<group>"; };
@@ -145,11 +145,11 @@
 		3A197FD17D9CD371C219A41F08CCC42E /* NextcloudConfig */ = {
 			isa = PBXGroup;
 			children = (
+				14BB69E72271E88E00081754 /* StringColor.swift */,
+				14BB69E82271E88E00081754 /* WebserviceResponse.swift */,
 				14E0C6852265E1A3003A04BF /* AuthenticationSession.swift */,
 				14E0C6832265BC6C003A04BF /* CapabilitiesResponse.swift */,
-				14BB69E52271DC0800081754 /* WebserviceResponse.swift */,
 				B00263EAB775F210B2332A111853CEF0 /* ApiClient.swift */,
-				EA44F243CFFADAEE21A0415720DF1F0C /* NCColor.swift */,
 				7251AC4386C6D974101F939A12BB0409 /* NextcloudConfig.swift */,
 				62F989A26E8FBEA7EE30D3615688C827 /* Pod */,
 				9513A4B887E39B10168222CEF0D93959 /* Support Files */,
@@ -447,8 +447,8 @@
 			files = (
 				C7C00F3315DF288C49E6EC1AB37BE4E2 /* ApiClient.swift in Sources */,
 				14E0C6842265BC6C003A04BF /* CapabilitiesResponse.swift in Sources */,
-				14BB69E62271DC0800081754 /* WebserviceResponse.swift in Sources */,
-				A771CDD3C4F3F96B4A6C8E9FE25FEB4A /* NCColor.swift in Sources */,
+				14BB69EA2271E88E00081754 /* WebserviceResponse.swift in Sources */,
+				14BB69E92271E88E00081754 /* StringColor.swift in Sources */,
 				4DE1BE693F086A9EEC48075517433C0D /* NextcloudConfig-dummy.m in Sources */,
 				14E0C6862265E1A4003A04BF /* AuthenticationSession.swift in Sources */,
 				F49757AC4352C4D4EE4454D03738619B /* NextcloudConfig.swift in Sources */,
