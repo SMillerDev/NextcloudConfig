@@ -6,6 +6,8 @@ osx_image: xcode10.2
 language: objective-c
 cache: cocoapods
 podfile: Example/Podfile
+xcode_scheme: NextcloudConfig_Example
+xcode_workspace: Example/NextcloudConfig.xcworkspace
 xcode_destination: platform=iOS Simulator,OS=12.2,name=iPhone X
 before_install:
 - gem install cocoapods # Since Travis is not always on latest version
