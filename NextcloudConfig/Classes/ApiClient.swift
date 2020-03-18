@@ -69,10 +69,10 @@ class APIRequest {
     ///   - method: The HTTP method to use
     ///   - path: The relative path from the baseURL
     ///   - body: `Encodable` The data that should be in the HTTP body
-    init<Body: Encodable>(method: HTTPMethod, path: String, body: Body) throws {
+    init<Body: Encodable>(method: HTTPMethod, path: String, body: Body) {
         self.method = method
         self.path = path
-        self.body = try JSONEncoder().encode(body)
+        self.body = try? JSONEncoder().encode(body)
     }
 }
 

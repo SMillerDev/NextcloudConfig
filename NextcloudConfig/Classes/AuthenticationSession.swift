@@ -16,6 +16,8 @@ import SafariServices
 open class AuthenticationSession: AuthenticationSessionProtocol {
 
     private let innerAuthenticationSession: AuthenticationSessionProtocol!
+    
+    private let vc = AuthenticationSessionViewController()
 
     /// Returns a web authentication session object.
     ///
@@ -37,6 +39,9 @@ open class AuthenticationSession: AuthenticationSessionProtocol {
                                                                  completionHandler: completionHandler)
         } else {
             innerAuthenticationSession = nil
+        }
+        if #available(iOS 13.0, *) {
+            (innerAuthenticationSession as! ASWebAuthenticationSession).presentationContextProvider = vc
         }
     }
 
@@ -85,4 +90,11 @@ extension SFAuthenticationSession: AuthenticationSessionProtocol {
 
 @available(iOS 12.0, *)
 extension ASWebAuthenticationSession: AuthenticationSessionProtocol {
+}
+
+class AuthenticationSessionViewController: UIView, ASWebAuthenticationPresentationContextProviding {
+    @available(iOS 13.0, *)
+    public func presentationAnchor(for session: ASWebAuthenticationSession) -> ASPresentationAnchor {
+        return UIApplication.shared.keyWindow!
+    }
 }

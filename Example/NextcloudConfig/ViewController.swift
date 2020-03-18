@@ -17,7 +17,8 @@ class ViewController: UIViewController {
 
     var webAuthSession: AuthenticationSessionProtocol!
 
-    var url: String = "https://demo15.nextcloud.bayton.org"
+    //var url: String = "https://demo1.nextcloud.com"
+    var url: String = "https://cloud.seanmolenaar.eu/nextcloud"
     var config: NextcloudConfig? {
         guard let url = URL(string: self.url) else {
             return nil
@@ -39,21 +40,16 @@ class ViewController: UIViewController {
     @IBAction func didPressLogin() {
         self.url = urlField.text ?? url
         configureLabel()
-        webAuthSession = config?.loginSession { urlOrNil, errorOrNil in
-            if let error = errorOrNil {
+        config?.loginSession { result in
+            switch(result) {
+            case .success(let session):
+                self.webAuthSession = session
+                let _ = self.webAuthSession.start()
+                break
+            case .failure(let error):
                 print(error.localizedDescription)
-                return
             }
-            guard let url = urlOrNil else {
-                print("Failure, no error or URL")
-                return
-            }
-            if !UIApplication.shared.canOpenURL(url) {
-                print("Failure, app can't open URL")
-            }
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
-        _ = webAuthSession.start()
     }
 
     func configureLabel() {
